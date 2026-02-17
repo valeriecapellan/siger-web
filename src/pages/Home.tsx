@@ -60,7 +60,7 @@ function Home() {
 
       <section className="menu-section">
         <div className="container">
-          <h2>Nuestro Menú</h2>
+          <h2>PLatos mas vendidos</h2>
           
           <div className="menu-filters">
             {categories.map(cat => (
@@ -73,6 +73,13 @@ function Home() {
               </button>
             ))}
           </div>
+          <p className="category-text">
+            {category === "all" && "Mostrando todo el menú"}
+            {category === "entradas" && "Mostrando entradas"}
+            {category === "principales" && "Mostrando platos principales"}
+            {category === "postres" && "Mostrando postres"}
+            {category === "bebidas" && "Mostrando bebidas"}
+            </p>
 
           {loading ? (
             <div className="loading">Cargando menú...</div>
