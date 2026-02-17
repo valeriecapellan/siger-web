@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './Home.css'
 import type { Menu } from '../models/menu';
+import { useNavigate } from "react-router-dom"
 
 function Home() {
   const [menu, setMenu] = useState<Menu[]>([])
   const [loading, setLoading] = useState(true)
   const [category, setCategory] = useState('all')
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     loadMenu()
@@ -39,7 +42,13 @@ function Home() {
           <h2>Bienvenido a SIGER</h2>
           <p>Disfruta de la mejor experiencia gastronómica</p>
           <div className="hero-buttons">
-            <button className="btn btn-primary">Hacer Reserva</button>
+            <button 
+            className="btn btn-primary"
+            onClick={() => navigate("/reserva")}
+            >
+              Hacer Reserva
+              </button>
+
             <button className="btn btn-secondary">Ver Menú</button>
           </div>
         </div>

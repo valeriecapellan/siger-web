@@ -6,6 +6,8 @@ import Admin from './pages/Admin'
 import Kitchen from './pages/Kitchen'
 import Tablet from './pages/Tablet'
 import Login from './pages/Login'
+import Reserva from './pages/Reserva'
+
 
 function App() {
   const [user, setUser] = useState(null)
@@ -35,6 +37,7 @@ function App() {
             <Route path="/admin/*" element={<Admin user={user} />} />
             <Route path="/kitchen" element={<Kitchen user={user} />} />
             <Route path="/tablet" element={<Tablet />} />
+            <Route path="/reserva" element={<Reserva />} />
           </Routes>
         </main>
 
