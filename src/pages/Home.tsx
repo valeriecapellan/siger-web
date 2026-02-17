@@ -49,7 +49,11 @@ function Home() {
               Hacer Reserva
               </button>
 
-            <button className="btn btn-secondary">Ver Menú</button>
+            <button className="btn btn-secondary"
+            onClick={() => navigate("/menu")}
+            >
+              Ver Menu
+            </button>
           </div>
         </div>
       </section>

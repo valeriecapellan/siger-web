@@ -7,6 +7,7 @@ import Kitchen from './pages/Kitchen'
 import Tablet from './pages/Tablet'
 import Login from './pages/Login'
 import Reserva from './pages/Reserva'
+import Menu from './pages/Menu'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/kitchen" element={<Kitchen user={user} />} />
             <Route path="/tablet" element={<Tablet />} />
             <Route path="/reserva" element={<Reserva />} />
+            <Route path="/menu" element={<Menu />} />
           </Routes>
         </main>
 

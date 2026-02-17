@@ -6,5 +6,4 @@ function Reserva() {
     </div>
   )
 }
-
 export default Reserva
