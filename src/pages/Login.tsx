@@ -1,16 +1,21 @@
-import { useState } from 'react'
+import { useState, type SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './Login.css'
+import type { User } from '../models/user';
 
-function Login({ setUser }) {
+interface LoginProps {
+  setUser: (user: User) => void;
+}
+
+function Login({ setUser }: LoginProps) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
     setLoading(true)

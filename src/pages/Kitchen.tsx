@@ -2,10 +2,15 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './Kitchen.css'
 import type { User } from '../models/user';
+import type { Order, OrderStatus } from '../models/order';
 
-function Kitchen({ user: User }) {
-  const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(true)
+interface KitchenProps {
+  user: User;
+}
+
+function Kitchen({ user }: KitchenProps) {
+  const [orders, setOrders] = useState<Order[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     loadOrders()
@@ -26,7 +31,7 @@ function Kitchen({ user: User }) {
     }
   }
 
-  const updateOrderStatus = async (orderId, newStatus) => {
+  const updateOrderStatus = async (orderId: number, newStatus: OrderStatus) => {
     try {
       const response = await axios.post('/api/controllers/kitchen_sync.php', {
         order_id: orderId,
@@ -41,8 +46,8 @@ function Kitchen({ user: User }) {
     }
   }
 
-  const getStatusColor = (status) => {
-    const colors = {
+  const getStatusColor = (status: OrderStatus | string) => {
+    const colors: Record<string, string> = {
       pending: '#ffc107',
       preparing: '#17a2b8',
       ready: '#28a745',
@@ -65,7 +70,7 @@ function Kitchen({ user: User }) {
       <div className="orders-grid">
         {orders.length === 0 ? (
           <div className="no-orders">
-            <h2>✅ No hay órdenes pendientes</h2>
+            <h2>No hay órdenes pendientes</h2>
             <p>Todos los pedidos han sido completados</p>
           </div>
         ) : (
@@ -77,7 +82,7 @@ function Kitchen({ user: User }) {
                   <p className="table-number">Mesa: {order.table_number || 'Para llevar'}</p>
                 </div>
                 <div className="order-time">
-                  <p>{order.elapsed_minutes} min</p>
+                  <p>{order.elapsed_minutes ? `${order.elapsed_minutes} min` : 'Reciente'}</p>
                   {order.is_delayed && <span className="delayed-badge">⚠️ Retrasada</span>}
                 </div>
               </div>

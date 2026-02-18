@@ -39,7 +39,7 @@ function App() {
         </main>
 
         <footer className="footer">
-          <p>&copy; 2026 SIGER - Sistema de Gestión de Restaurante</p>
+          <p>&copy; {new Date().getFullYear()} SIGER - Sistema de Gestión de Restaurante</p>
         </footer>
       </div>
     </Router>
