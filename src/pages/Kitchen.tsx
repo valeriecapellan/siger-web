@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import BackButton from '../components/BackButton'
 import './Kitchen.css'
 import type { User } from '../models/user';
 
+interface Order {
+  id: number;
+  status: string;
+  table_number?: string;
+  elapsed_minutes: number;
+  is_delayed: boolean;
+  items_summary: string;
+}
+
 function Kitchen({ user: User }) {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadOrders()
-    const interval = setInterval(loadOrders, 5000) // Actualizar cada 5 segundos
-    return () => clearInterval(interval)
-  }, [])
 
   const loadOrders = async () => {
     try {
@@ -26,7 +31,13 @@ function Kitchen({ user: User }) {
     }
   }
 
-  const updateOrderStatus = async (orderId, newStatus) => {
+  useEffect(() => {
+    loadOrders()
+    const interval = setInterval(loadOrders, 5000) // Actualizar cada 5 segundos
+    return () => clearInterval(interval)
+  }, [])
+
+  const updateOrderStatus = async (orderId: number, newStatus: string) => {
     try {
       const response = await axios.post('/api/controllers/kitchen_sync.php', {
         order_id: orderId,
@@ -41,14 +52,14 @@ function Kitchen({ user: User }) {
     }
   }
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     const colors = {
       pending: '#ffc107',
       preparing: '#17a2b8',
       ready: '#28a745',
       delivered: '#6c757d'
     }
-    return colors[status] || '#666'
+    return colors[status as keyof typeof colors] || '#666'
   }
 
   if (loading) {
@@ -57,6 +68,7 @@ function Kitchen({ user: User }) {
 
   return (
     <div className="kitchen-page">
+      <BackButton to="/admin" />
       <div className="kitchen-header">
         <h1>👨‍🍳 Pantalla de Cocina</h1>
         <p>Órdenes Activas: {orders.length}</p>

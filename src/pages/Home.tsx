@@ -8,9 +8,6 @@ function Home() {
   const [loading, setLoading] = useState(true)
   const [category, setCategory] = useState('all')
 
-  useEffect(() => {
-    loadMenu()
-  }, [category])
 
   const loadMenu = async () => {
     try {
@@ -29,6 +26,10 @@ function Home() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    loadMenu()
+  }, [category])
 
   const categories = ['all', 'entradas', 'principales', 'postres', 'bebidas']
 
@@ -65,24 +66,29 @@ function Home() {
             <div className="loading">Cargando menú...</div>
           ) : (
             <div className="menu-grid">
-              {menu.map(item => (
-                <div key={item.id} className="menu-item">
-                  <img 
-                    src={item.image || '/placeholder.jpg'}
-                    alt={item.name}
-                  />
-                  <div className="menu-item-info">
-                    <h3>{item.name}</h3>
-                    <p>{item.description || 'Delicioso platillo de nuestra carta'}</p>
-                    <div className="menu-item-price">${item.price.toFixed(2)}</div>
-                    {item.available ? (
-                      <button className="btn btn-primary">Agregar</button>
-                    ) : (
-                      <span className="badge">No disponible</span>
-                    )}
+              {menu.map(item => {
+                let icon = '🍽️';
+                if (item.name.toLowerCase().includes('carne') || item.name.toLowerCase().includes('pollo') || item.name.toLowerCase().includes('pescado')) icon = '🥩';
+                else if (item.name.toLowerCase().includes('ensalada') || item.name.toLowerCase().includes('verdura')) icon = '🥗';
+                else if (item.name.toLowerCase().includes('postre') || item.name.toLowerCase().includes('dulce')) icon = '🍰';
+                else if (item.name.toLowerCase().includes('bebida') || item.name.toLowerCase().includes('vino') || item.name.toLowerCase().includes('cerveza')) icon = '🍷';
+                else if (item.name.toLowerCase().includes('sopa')) icon = '🍲';
+                return (
+                  <div key={item.id} className="menu-item">
+                    <div style={{fontSize: '3.5rem', width: '100%', textAlign: 'center', margin: '1.2rem 0 0.5rem 0'}}>{icon}</div>
+                    <div className="menu-item-info">
+                      <h3>{item.name}</h3>
+                      <p>{item.description || 'Delicioso platillo de nuestra carta'}</p>
+                      <div className="menu-item-price">${item.price.toFixed(2)}</div>
+                      {item.available ? (
+                        <button className="btn btn-primary">Agregar</button>
+                      ) : (
+                        <span className="badge">No disponible</span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>
